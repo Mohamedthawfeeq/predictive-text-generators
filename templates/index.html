@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Predictive Text Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+<div class="scanline"></div>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">◈</span>
+    <span class="logo-text">NEXTEXT</span>
+    <span class="logo-sub">/ PREDICTIVE ENGINE</span>
+  </div>
+  <div class="header-stats" id="headerStats">
+    <span class="stat-item"><span class="stat-val" id="vocabCount">—</span> VOCAB</span>
+    <span class="stat-sep">·</span>
+    <span class="stat-item"><span class="stat-val" id="contextCount">—</span> CONTEXTS</span>
+  </div>
+</header>
+
+<main>
+  <!-- LEFT: Input Panel -->
+  <section class="panel input-panel">
+    <div class="panel-header">
+      <span class="panel-title">INPUT STREAM</span>
+      <div class="mode-switcher">
+        <button class="mode-btn active" data-mode="hybrid">HYBRID</button>
+        <button class="mode-btn" data-mode="local">LOCAL</button>
+        <button class="mode-btn" data-mode="groq">GROQ AI</button>
+      </div>
+    </div>
+
+    <div class="textarea-wrapper">
+      <textarea
+        id="textInput"
+        placeholder="Start typing your sentence here..."
+        spellcheck="false"
+        rows="6"
+      ></textarea>
+      <div class="cursor-indicator" id="cursorIndicator">█</div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-primary" id="generateBtn">
+        <span class="btn-icon">⟳</span> GENERATE CONTINUATION
+      </button>
+      <button class="btn-ghost" id="clearBtn">CLEAR</button>
+    </div>
+
+    <div class="continuation-box" id="continuationBox" style="display:none">
+      <div class="cont-label">AI CONTINUATION</div>
+      <div class="cont-text" id="continuationText"></div>
+      <button class="btn-accept" id="acceptCont">ACCEPT →</button>
+    </div>
+
+    <!-- Source badge -->
+    <div class="source-badge" id="sourceBadge" style="opacity:0">
+      <span id="sourceLabel">—</span>
+    </div>
+  </section>
+
+  <!-- CENTER: Predictions -->
+  <section class="panel predict-panel">
+    <div class="panel-header">
+      <span class="panel-title">PREDICTIONS</span>
+      <span class="live-dot"></span>
+    </div>
+
+    <div id="predictionList" class="prediction-list">
+      <div class="empty-state">
+        <div class="empty-icon">◌</div>
+        <p>Start typing to see word predictions appear here in real-time.</p>
+      </div>
+    </div>
+
+    <div class="probability-chart" id="probabilityChart"></div>
+  </section>
+
+  <!-- RIGHT: Dictionary & Train -->
+  <section class="panel dict-panel">
+    <div class="panel-header">
+      <span class="panel-title">CUSTOM DICTIONARY</span>
+    </div>
+
+    <div class="dict-add">
+      <input type="text" id="dictInput" placeholder="Add word or phrase..." />
+      <div class="dict-type-row">
+        <label class="radio-label">
+          <input type="radio" name="dictType" value="word" checked/> Word
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="dictType" value="phrase"/> Phrase
+        </label>
+      </div>
+      <button class="btn-add" id="addDictBtn">+ ADD TO DICTIONARY</button>
+    </div>
+
+    <div class="dict-sections">
+      <div class="dict-section">
+        <div class="dict-section-label">WORDS</div>
+        <div id="wordsList" class="dict-list"></div>
+      </div>
+      <div class="dict-section">
+        <div class="dict-section-label">PHRASES</div>
+        <div id="phrasesList" class="dict-list"></div>
+      </div>
+    </div>
+
+    <div class="panel-header" style="margin-top:1.5rem">
+      <span class="panel-title">TRAIN MODEL</span>
+    </div>
+    <textarea id="trainInput" placeholder="Paste text to train the model on your writing style..." rows="4"></textarea>
+    <button class="btn-train" id="trainBtn">⬆ TRAIN ON THIS TEXT</button>
+    <div class="train-status" id="trainStatus"></div>
+  </section>
+</main>
+
+<footer>
+  <span>NEXTEXT · N-GRAM + MARKOV + GROQ LLM ENGINE</span>
+  <span id="footerMode">MODE: HYBRID</span>
+</footer>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
